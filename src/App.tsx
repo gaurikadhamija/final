@@ -67,20 +67,19 @@ const MainContent: React.FC = () => {
 
   // 3. Authenticated or Guest Preview App Flow
   return (
-    <div className="relative flex flex-col min-h-screen text-[#241410] selection:bg-[#5B2435] selection:text-[#FFFDF8] bg-transparent">
-      {/* Multi-Layer Animated Coffee Atmosphere Background */}
+    <div className="relative flex flex-col min-h-screen text-[#1C1311] selection:bg-[#581C2E] selection:text-[#FAF7F2] bg-transparent">
+      {/* Editorial Academic Foundation Canvas */}
       <CoffeeAtmosphere />
 
-      {/* Guest Mode Floating Invitation Bar if browsing without an account */}
+      {/* Guest Mode Invitation Bar if browsing without an account */}
       {!isAuthenticated && isGuestPreview && (
-        <div className="sticky top-0 z-50 w-full bg-[#5B2435] text-[#FFFDF8] px-4 py-2 text-xs flex items-center justify-between shadow-md">
+        <div className="sticky top-0 z-50 w-full bg-[#581C2E] text-[#FAF7F2] px-4 py-2 text-xs flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-2 font-medium">
-            <Sparkles className="w-3.5 h-3.5 text-[#EFE5D5]" />
             <span>You are browsing WorthWhile in Guest Mode. Sign in to save events, track verified hours, and build your student portfolio.</span>
           </div>
           <button
             onClick={() => setIsGuestPreview(false)}
-            className="px-3 py-1 rounded bg-[#FFFDF8] text-[#5B2435] font-bold text-[11px] uppercase tracking-wider hover:bg-[#F8F4EC] transition-colors shrink-0 ml-3"
+            className="px-3 py-1 rounded bg-[#FAF7F2] text-[#581C2E] font-semibold text-[11px] uppercase tracking-wider hover:bg-[#FFFFFF] transition-colors shrink-0 ml-3 cursor-pointer"
           >
             Sign In / Register
           </button>
@@ -124,16 +123,16 @@ const MainContent: React.FC = () => {
           <div
             role="status"
             aria-live="polite"
-            className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl bg-[#241410] text-[#FFFDF8] shadow-2xl border border-[#5B2435]/50 animate-fade-in text-xs font-semibold backdrop-blur-md"
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-md bg-[#1C1311] text-[#FAF7F2] shadow-xl border border-[#581C2E]/60 text-xs font-semibold backdrop-blur-md"
           >
-            <span className="p-1.5 rounded-lg bg-[#5B2435] text-[#FFFDF8]">
+            <span className="p-1 rounded bg-[#581C2E] text-white">
               <Bookmark className="w-3.5 h-3.5 fill-current" />
             </span>
             <span>{saveToast.message}</span>
             <button
               type="button"
               onClick={dismissSaveToast}
-              className="ml-2 text-[#CFC1AF] hover:text-[#FFFDF8] transition-colors p-1"
+              className="ml-2 text-[#D5C9B8] hover:text-white transition-colors p-1 cursor-pointer"
               aria-label="Dismiss notification"
             >
               ✕

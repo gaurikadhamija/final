@@ -240,10 +240,10 @@ export const FreeTimePage: React.FC = () => {
                 return (
                   <div
                     key={ev.id}
-                    className={`rounded-xl p-5 sm:p-6 transition-all border ${
+                    className={`rounded-lg p-5 sm:p-6 transition-all border ${
                       isFit
-                        ? 'bg-[#FFFDF8] border-[#E2D7C8] hover:border-[#5B2435] shadow-xs'
-                        : 'bg-[#FDFBF7] border-[#E2D7C8]'
+                        ? 'bg-[#FFFFFF] border-[#D5C9B8] hover:border-[#581C2E] shadow-2xs'
+                        : 'bg-[#FAF7F2] border-[#E5DDD1]'
                     }`}
                   >
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
@@ -252,32 +252,32 @@ export const FreeTimePage: React.FC = () => {
                       <div className="flex-1 space-y-2">
                         {/* High-Contrast Status Line */}
                         <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-                          <span className={`font-bold px-2 py-0.5 rounded text-[11px] ${
-                            isFit ? 'bg-[#DCFCE7] text-[#14532D] border border-[#86EFAC]' : 'bg-[#FEE2E2] text-[#991B1B] border border-[#FCA5A5]'
+                          <span className={`font-semibold px-2 py-0.5 rounded text-[11px] ${
+                            isFit ? 'bg-[#1F5C3E]/10 text-[#1F5C3E]' : 'bg-[#991B1B]/10 text-[#991B1B]'
                           }`}>
                             {isFit ? '✓ Fits Window' : '✕ Exceeds Window'}
                           </span>
-                          <span className="text-[#CFC1AF]">/</span>
-                          <span className="text-[#241410] font-bold">{ev.category}</span>
-                          <span className="text-[#CFC1AF]">/</span>
-                          <span className="text-[#241410] font-bold">{rec.timeWindowDisplay}</span>
+                          <span className="text-[#D5C9B8]">·</span>
+                          <span className="text-[#1C1311] font-semibold">{ev.category}</span>
+                          <span className="text-[#D5C9B8]">·</span>
+                          <span className="text-[#1C1311] font-semibold">{rec.timeWindowDisplay}</span>
                         </div>
 
-                        <h3 className="font-serif font-bold text-lg sm:text-xl text-[#241410]">
+                        <h3 className="font-serif font-bold text-lg sm:text-xl text-[#1C1311]">
                           {ev.title}
                         </h3>
 
-                        <p className="text-xs text-[#4A3830]">
+                        <p className="text-xs text-[#5C4A42]">
                           {ev.venue?.name} · {ev.venue?.building} ({ev.venue?.campus_zone})
                         </p>
 
                         {/* Commute & Feasibility explanation */}
                         <div className="pt-2 text-xs flex flex-wrap items-center gap-2">
-                          <span className="font-bold text-[#241410]">
+                          <span className="font-semibold text-[#1C1311]">
                             ⏱ {rec.commuteEstimateMinutes}m commute ({rec.distanceKm} km via {rec.commuteTransitMode})
                           </span>
-                          <span className="text-[#CFC1AF]">·</span>
-                          <span className={`font-semibold ${isFit ? 'text-[#194D33]' : 'text-[#78350F]'}`}>
+                          <span className="text-[#D5C9B8]">·</span>
+                          <span className={`font-medium ${isFit ? 'text-[#1F5C3E]' : 'text-[#8C6834]'}`}>
                             {rec.explanation}
                           </span>
                         </div>
@@ -290,21 +290,21 @@ export const FreeTimePage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => toggleSave(ev.id)}
-                          className={`px-3.5 py-2.5 rounded-lg border text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs ${
+                          className={`px-3.5 py-2 rounded-md border text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer ${
                             savedEventIds.has(ev.id)
-                              ? 'bg-[#5B2435] text-[#FFFDF8] border-[#5B2435]'
-                              : 'bg-[#FFFDF8] hover:bg-[#F8F4EC] text-[#241410] border-[#D5C7B5]'
+                              ? 'bg-[#581C2E] text-white border-[#581C2E]'
+                              : 'bg-[#FFFFFF] hover:bg-[#FAF7F2] text-[#1C1311] border-[#D5C9B8]'
                           }`}
                           title={savedEventIds.has(ev.id) ? 'Remove from saved sessions' : 'Save session to your agenda'}
                         >
-                          <Bookmark className={`w-3.5 h-3.5 ${savedEventIds.has(ev.id) ? 'fill-current text-[#FFFDF8]' : 'text-[#5B2435]'}`} />
+                          <Bookmark className={`w-3.5 h-3.5 ${savedEventIds.has(ev.id) ? 'fill-current text-white' : 'text-[#581C2E]'}`} />
                           <span>{savedEventIds.has(ev.id) ? 'Saved' : 'Save Session'}</span>
                         </button>
 
                         <button
                           type="button"
                           onClick={() => navigateTo('event-details', ev.id)}
-                          className="px-4 py-2.5 rounded-lg bg-[#5B2435] hover:bg-[#3F1723] text-[#FFFDF8] font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-xs"
+                          className="px-4 py-2 rounded-md bg-[#581C2E] hover:bg-[#431422] text-[#FAF7F2] font-semibold text-xs uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                         >
                           <span>View Details</span>
                           <ArrowRight className="w-3.5 h-3.5" />

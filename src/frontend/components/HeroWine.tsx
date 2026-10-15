@@ -10,13 +10,11 @@ import worthwhileCoffeePreviewImg from '../../assets/images/worthwhile_coffee_pr
 
 interface SpotlightSlide {
   id: string;
-  badge: string;
-  tier: string;
-  title: string;
-  tagline: string;
   category: string;
   venue: string;
   time: string;
+  title: string;
+  tagline: string;
   score: number;
   skills: string[];
   attendeeEvidence: string;
@@ -27,63 +25,55 @@ interface SpotlightSlide {
 const SPOTLIGHT_SLIDES: SpotlightSlide[] = [
   {
     id: 'evt_robotics_ros2_lab',
-    badge: 'Highest Recommended Fit',
-    tier: 'Tier 1 Match',
-    title: 'Hands-on ROS2 & Real-Time LiDAR SLAM Mapping',
-    tagline: 'Program physical TurtleBot4 rovers through indoor occupancy grid mapping in the Advanced Robotics Lab.',
-    category: 'Workshops',
+    category: 'Advanced Robotics Workshop',
     venue: 'Turing Hall, IIIT Delhi',
     time: 'Thursday, 3:00 PM – 5:30 PM',
+    title: 'Hands-on ROS2 & Real-Time LiDAR SLAM Mapping',
+    tagline: 'Program physical TurtleBot4 rovers through indoor occupancy grid mapping in the Advanced Robotics Lab.',
     score: 94,
     skills: ['ROS2 Humble', 'Nav2', 'Occupancy Grids'],
     attendeeEvidence: '92% verified by 24 checked-in attendees',
     image: campusTechSalonImg,
-    alt: 'Hands-on ROS2 and SLAM Workshop in Turing Hall'
+    alt: 'Students collaborating in the robotics lab'
   },
   {
     id: 'evt_genai_llm_agents',
-    badge: 'High Impact Workshop',
-    tier: 'Tier 1 Match',
-    title: 'Autonomous Generative AI & Multi-Agent Loops',
-    tagline: 'Build production vector retrieval pipelines, structured tool-calling, and LangGraph agent loops with industry leads.',
-    category: 'Workshops',
+    category: 'Engineering Masterclass',
     venue: 'Bharti Hall, IIT Delhi',
     time: 'Friday, 3:15 PM – 5:15 PM',
+    title: 'Autonomous Generative AI & Multi-Agent Loops',
+    tagline: 'Build production vector retrieval pipelines, structured tool-calling, and LangGraph agent loops with industry leads.',
     score: 96,
     skills: ['Gemini 2.5 API', 'LangGraph', 'Function Calling'],
     attendeeEvidence: '96% verified by 68 checked-in attendees',
     image: studentWorkshopImg,
-    alt: 'Students collaborating in an interactive AI workshop'
+    alt: 'AI engineering workshop in progress'
   },
   {
     id: 'evt_startup_pitch_mixer',
-    badge: 'Founder & Venture Spotlight',
-    tier: 'Tier 1 Match',
-    title: 'Founders & Angel Pitch Mixer: Fall Cohort Demo',
-    tagline: '12 student ventures pitch for $50k in nondilutive micro-grants in front of Silicon Valley angels on the terrace.',
-    category: 'Networking',
+    category: 'Venture & Founder Mixer',
     venue: 'Terrace Amphitheatre, IHC Lodhi',
     time: 'Saturday, 4:00 PM – 6:00 PM',
+    title: 'Founders & Angel Pitch Mixer: Fall Cohort Demo',
+    tagline: '12 student ventures pitch for $50k in nondilutive micro-grants in front of seed funds and campus alumni.',
     score: 91,
     skills: ['Pitch Decks', 'Venture Capital', 'Angel Co-founders'],
     attendeeEvidence: '89% verified by 52 founders and scouts',
     image: campusQuadArchImg,
-    alt: 'Campus architectural courtyard and evening mixer space'
+    alt: 'Evening campus courtyard discussion'
   },
   {
     id: 'evt_hft_quant_trading',
-    badge: 'Competitive Finance Clinic',
-    tier: 'Tier 1 Match',
-    title: 'HFT Order Books & Algorithmic Market Making',
-    tagline: 'Simulate limit order book dynamics and latency arbitrage strategies in high-frequency trading simulations.',
-    category: 'Career Events',
+    category: 'Quantitative Finance Clinic',
     venue: 'Auditorium 2, NSUT Dwarka',
     time: 'Thursday, 6:00 PM – 8:00 PM',
+    title: 'HFT Order Books & Algorithmic Market Making',
+    tagline: 'Simulate limit order book dynamics and latency arbitrage strategies in high-frequency trading simulations.',
     score: 93,
     skills: ['Python', 'Order Book Dynamics', 'Backtesting'],
     attendeeEvidence: '95% verified by 36 engineering attendees',
     image: worthwhileCoffeePreviewImg,
-    alt: 'Evening campus lecture hall with students at work'
+    alt: 'Lecture hall with student finance simulations'
   }
 ];
 
@@ -92,177 +82,141 @@ export const HeroWine: React.FC = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [direction, setDirection] = useState<'next' | 'prev'>('next');
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const goToSlide = useCallback((newIndex: number, dir: 'next' | 'prev') => {
-    if (isTransitioning) return;
-    setDirection(dir);
-    setIsTransitioning(true);
+  const goToSlide = useCallback((newIndex: number) => {
     setCurrentIndex(newIndex);
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, 450);
-  }, [isTransitioning]);
+  }, []);
 
   const handleNext = useCallback(() => {
-    const nextIdx = (currentIndex + 1) % SPOTLIGHT_SLIDES.length;
-    goToSlide(nextIdx, 'next');
-  }, [currentIndex, goToSlide]);
+    setCurrentIndex(prev => (prev + 1) % SPOTLIGHT_SLIDES.length);
+  }, []);
 
   const handlePrev = useCallback(() => {
-    const prevIdx = (currentIndex - 1 + SPOTLIGHT_SLIDES.length) % SPOTLIGHT_SLIDES.length;
-    goToSlide(prevIdx, 'prev');
-  }, [currentIndex, goToSlide]);
+    setCurrentIndex(prev => (prev - 1 + SPOTLIGHT_SLIDES.length) % SPOTLIGHT_SLIDES.length);
+  }, []);
 
-  // Autoplay cycle
   useEffect(() => {
     if (!isPlaying) {
       if (timerRef.current) clearInterval(timerRef.current);
       return;
     }
-
     timerRef.current = setInterval(() => {
       handleNext();
-    }, 5500);
-
+    }, 6000);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [isPlaying, handleNext]);
 
-  // Touch gesture support (swipe)
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
-    }
-    setTouchStartX(null);
-  };
-
   const currentSlide = SPOTLIGHT_SLIDES[currentIndex];
 
   return (
-    <section className="relative border-b border-[#E2D7C8] bg-transparent pt-12 pb-16 lg:pt-16 lg:pb-20 overflow-hidden">
+    <section className="relative border-b border-[#E5DDD1] bg-transparent pt-10 pb-16 lg:pt-14 lg:pb-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        {/* Editorial 2-Column Composition */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        {/* Main 12-Column Editorial Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           {/* Column 1: Editorial Intent & Value Proposition */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             
-            {/* Curatorial Kicker */}
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#5B2435] font-bold mb-4">
+            {/* Human Editorial Kicker */}
+            <div className="flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-[#581C2E] font-semibold mb-4">
               <span>Campus Decision Intelligence</span>
-              <span aria-hidden="true" className="text-[#B78A4A]">/</span>
-              <span>Autumn Term 2026</span>
+              <span aria-hidden="true" className="text-[#A48F7C]">·</span>
+              <span>2026 Academic Term</span>
             </div>
 
             {/* High-Contrast Display Headline */}
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#241410] leading-[1.08] tracking-tight">
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1C1311] leading-[1.08] tracking-tight">
               The right events.<br className="hidden sm:inline" />
               At the right time.<br className="hidden sm:inline" />
-              <span className="italic font-normal text-[#5B2435]">For your goals.</span>
+              <span className="italic font-normal text-[#581C2E]">For your goals.</span>
             </h1>
 
-            {/* High-Contrast Pitch / Deck (WCAG AAA compliant: 7.5:1 on ivory) */}
-            <p className="text-base sm:text-lg text-[#4A3830] mt-5 max-w-2xl leading-relaxed font-normal">
-              WorthWhile helps students discover, compare, and choose the most relevant campus events based on your semester priorities, available time, and verified peer evidence.
+            {/* High-Contrast Deck */}
+            <p className="text-base sm:text-lg text-[#473832] mt-5 max-w-xl leading-relaxed font-normal">
+              WorthWhile matches students with high-yield campus workshops, hackathons, and research salons based on your semester targets, verified turnout audits, and real commute windows.
             </p>
 
-            {/* Quick Actions */}
+            {/* Actions */}
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => {
                   const el = document.getElementById('discover-section');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="px-5 py-3 rounded-lg bg-[#5B2435] text-[#FFFDF8] text-xs font-bold uppercase tracking-wider hover:bg-[#3F1723] shadow-md flex items-center gap-2 transition-transform active:scale-98 cursor-pointer"
+                className="px-5 py-3 rounded-md bg-[#581C2E] text-[#FAF7F2] text-xs font-semibold uppercase tracking-wider hover:bg-[#431422] shadow-sm flex items-center gap-2 transition-all active:scale-[0.98] cursor-pointer"
               >
-                <span>Browse Curated Catalog</span>
+                <span>Browse Catalog</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
 
               <button
                 onClick={() => navigateTo('freetime')}
-                className="px-5 py-3 rounded-lg bg-[#FFFDF8] border border-[#D5C7B5] text-[#241410] text-xs font-bold uppercase tracking-wider hover:bg-[#F8F4EC] transition-colors flex items-center gap-2 shadow-xs cursor-pointer"
+                className="px-4 py-3 rounded-md bg-[#FFFFFF] border border-[#D5C9B8] text-[#1C1311] text-xs font-semibold uppercase tracking-wider hover:bg-[#FAF7F2] transition-colors flex items-center gap-2 shadow-2xs cursor-pointer"
               >
-                <Clock className="w-3.5 h-3.5 text-[#5B2435]" />
-                <span>"I Have 2 Hours Free"</span>
+                <Clock className="w-3.5 h-3.5 text-[#581C2E]" />
+                <span>2-Hour Free Window</span>
               </button>
 
               <button
                 onClick={() => setIsGoalsModalOpen(true)}
-                className="px-4 py-3 rounded-lg text-xs font-bold text-[#30231F] hover:text-[#5B2435] hover:bg-[#EFE5D5]/80 transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-3.5 py-3 rounded-md text-xs font-semibold text-[#5C4A42] hover:text-[#581C2E] transition-colors flex items-center gap-1.5 cursor-pointer"
               >
-                <Sliders className="w-3.5 h-3.5 text-[#5B2435]" />
-                <span>Adjust Semester Goals</span>
+                <Sliders className="w-3.5 h-3.5 text-[#581C2E]" />
+                <span>Adjust Priorities</span>
               </button>
             </div>
 
-            {/* Operational Utility Strip (Solid high contrast numbers & labels) */}
-            <div className="mt-12 pt-6 border-t border-[#E2D7C8] grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
+            {/* Statistics Strip */}
+            <div className="mt-12 pt-6 border-t border-[#E5DDD1] grid grid-cols-2 sm:grid-cols-4 gap-6 text-left">
               <div>
-                <span className="block font-serif text-3xl font-bold text-[#241410] tabular-nums">21</span>
-                <span className="text-[11px] uppercase tracking-wider text-[#4A3830] font-bold">Curated Sessions</span>
+                <span className="block font-serif text-3xl font-bold text-[#1C1311] tabular-nums">21</span>
+                <span className="text-[11px] uppercase tracking-wider text-[#735E55] font-semibold">Active Sessions</span>
               </div>
               <div>
-                <span className="block font-serif text-3xl font-bold text-[#5B2435] tabular-nums">14</span>
-                <span className="text-[11px] uppercase tracking-wider text-[#4A3830] font-bold">Delhi Venues</span>
+                <span className="block font-serif text-3xl font-bold text-[#581C2E] tabular-nums">14</span>
+                <span className="text-[11px] uppercase tracking-wider text-[#735E55] font-semibold">Delhi Venues</span>
               </div>
               <div>
-                <span className="block font-serif text-3xl font-bold text-[#241410] tabular-nums">88%</span>
-                <span className="text-[11px] uppercase tracking-wider text-[#4A3830] font-bold">Avg Goal Match</span>
+                <span className="block font-serif text-3xl font-bold text-[#1C1311] tabular-nums">88%</span>
+                <span className="text-[11px] uppercase tracking-wider text-[#735E55] font-semibold">Avg Target Match</span>
               </div>
               <div>
-                <span className="block font-serif text-3xl font-bold text-[#194D33] tabular-nums">100%</span>
-                <span className="text-[11px] uppercase tracking-wider text-[#4A3830] font-bold">Verified Checks</span>
+                <span className="block font-serif text-3xl font-bold text-[#1F5C3E] tabular-nums">100%</span>
+                <span className="text-[11px] uppercase tracking-wider text-[#735E55] font-semibold">Verified Checks</span>
               </div>
             </div>
           </div>
 
-          {/* Column 2: Curated Spotlight Story Carousel */}
+          {/* Column 2: Spotlight Dossier */}
           <div className="lg:col-span-5">
             <div 
-              className="relative rounded-2xl border border-[#D5C7B5] bg-[#FFFDF8] p-6 shadow-md transition-all hover:border-[#5B2435] group"
+              className="relative rounded-lg border border-[#D5C9B8] bg-[#FFFFFF] p-6 shadow-sm transition-all hover:border-[#581C2E] group"
               onMouseEnter={() => setIsPlaying(false)}
               onMouseLeave={() => setIsPlaying(true)}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
             >
               
-              {/* Header Ribbon with Carousel Navigation Controls */}
-              <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#E2D7C8] text-xs">
+              {/* Header Dossier Line */}
+              <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#E5DDD1] text-xs">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-[#5B2435] font-bold">
-                    {currentSlide.badge}
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[#581C2E] font-bold">
+                    Featured Session
                   </span>
-                  <span className="text-[10px] font-mono text-[#8C7667] bg-[#F8F4EC] px-1.5 py-0.5 rounded border border-[#E2D7C8]">
-                    {currentIndex + 1} / {SPOTLIGHT_SLIDES.length}
+                  <span className="text-[10px] font-mono text-[#735E55]">
+                    {currentIndex + 1} of {SPOTLIGHT_SLIDES.length}
                   </span>
                 </div>
                 
-                {/* Carousel Controls */}
+                {/* Clean Controls */}
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    title={isPlaying ? "Pause autoplay" : "Resume autoplay"}
-                    aria-label={isPlaying ? "Pause carousel autoplay" : "Resume carousel autoplay"}
-                    className="p-1 rounded-md text-[#5B2435] hover:bg-[#F8F4EC] transition-colors cursor-pointer"
+                    title={isPlaying ? "Pause rotation" : "Resume rotation"}
+                    aria-label={isPlaying ? "Pause rotation" : "Resume rotation"}
+                    className="p-1 rounded text-[#735E55] hover:text-[#1C1311] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
                   >
                     {isPlaying ? (
                       <Pause className="w-3.5 h-3.5" />
@@ -272,146 +226,73 @@ export const HeroWine: React.FC = () => {
                   </button>
                   <button
                     onClick={handlePrev}
-                    aria-label="Previous event spotlight"
-                    className="p-1 rounded-md text-[#241410] hover:text-[#5B2435] hover:bg-[#F8F4EC] border border-[#E2D7C8] transition-colors cursor-pointer"
+                    aria-label="Previous spotlight"
+                    className="p-1 rounded text-[#1C1311] hover:text-[#581C2E] hover:bg-[#FAF7F2] border border-[#E5DDD1] transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={handleNext}
-                    aria-label="Next event spotlight"
-                    className="p-1 rounded-md text-[#241410] hover:text-[#5B2435] hover:bg-[#F8F4EC] border border-[#E2D7C8] transition-colors cursor-pointer"
+                    aria-label="Next spotlight"
+                    className="p-1 rounded text-[#1C1311] hover:text-[#581C2E] hover:bg-[#FAF7F2] border border-[#E5DDD1] transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
 
-              {/* Cover Image Carousel Stage with Smooth Crossfade & Motion */}
-              <div className="relative h-52 w-full rounded-xl overflow-hidden bg-[#241410] mb-4 select-none">
-                {/* Carousel Slides */}
-                {SPOTLIGHT_SLIDES.map((slide, idx) => {
-                  const isActive = idx === currentIndex;
-                  return (
-                    <div
-                      key={slide.id}
-                      className={`absolute inset-0 w-full h-full transition-all duration-500 ease-out ${
-                        isActive
-                          ? 'opacity-100 scale-100 z-10 pointer-events-auto'
-                          : 'opacity-0 scale-105 z-0 pointer-events-none'
-                      }`}
-                      aria-hidden={!isActive}
-                    >
-                      <img
-                        src={slide.image}
-                        alt={slide.alt}
-                        onError={(e) => {
-                          // Fallback to solid editorial brand background if image fails to render
-                          (e.target as HTMLImageElement).style.display = 'none';
-                        }}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
-                      {/* Measured Dark Contrast Scrim for WCAG readability */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
-                      
-                      {/* Category Pill Tag */}
-                      <div className="absolute top-3 left-3 bg-[#241410]/80 backdrop-blur-xs border border-[#FFFDF8]/30 px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider text-[#FFFDF8]">
-                        {slide.category}
-                      </div>
-
-                      {/* Venue & Time Overlay */}
-                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-[#FFFDF8] font-semibold drop-shadow-sm">
-                        <div className="truncate mr-2">
-                          <span>{slide.venue}</span>
-                          <span className="mx-2 text-[#E2D7C8]/70">·</span>
-                          <span>{slide.time}</span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-
-                {/* Left/Right Click Nav Arrows over Image on Hover */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePrev();
+              {/* Cover Image Stage */}
+              <div className="relative h-48 w-full rounded-md overflow-hidden bg-[#1C1311] mb-4 select-none">
+                <img
+                  src={currentSlide.image}
+                  alt={currentSlide.alt}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
                   }}
-                  aria-label="Previous slide"
-                  className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-[#5B2435] text-white flex items-center justify-center backdrop-blur-xs border border-white/20 transition-all opacity-0 group-hover:opacity-100 active:scale-95 cursor-pointer shadow-md"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleNext();
-                  }}
-                  aria-label="Next slide"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-[#5B2435] text-white flex items-center justify-center backdrop-blur-xs border border-white/20 transition-all opacity-0 group-hover:opacity-100 active:scale-95 cursor-pointer shadow-md"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-
-                {/* Autoplay Progress Bar Indicator */}
-                {isPlaying && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-20">
-                    <div 
-                      key={currentIndex}
-                      className="h-full bg-[#B78A4A] transition-all duration-[5500ms] ease-linear"
-                      style={{ width: '100%', animation: 'progressFill 5.5s linear' }}
-                    />
-                  </div>
-                )}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                />
+                
+                {/* Measured Contrast Scrim */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
+                
+                {/* Unboxed Metadata Overlay */}
+                <div className="absolute bottom-2.5 left-3 right-3 text-xs text-white drop-shadow-sm flex items-center justify-between font-mono text-[11px]">
+                  <span>{currentSlide.category}</span>
+                  <span>{currentSlide.venue.split(',')[0]}</span>
+                </div>
               </div>
 
-              {/* Carousel Pagination Dots */}
-              <div className="flex items-center justify-center gap-2 mb-3">
-                {SPOTLIGHT_SLIDES.map((slide, idx) => (
-                  <button
-                    key={slide.id}
-                    onClick={() => goToSlide(idx, idx > currentIndex ? 'next' : 'prev')}
-                    aria-label={`Go to spotlight slide ${idx + 1}: ${slide.title}`}
-                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      idx === currentIndex
-                        ? 'w-6 bg-[#5B2435]'
-                        : 'w-2 bg-[#D5C7B5] hover:bg-[#A89886]'
-                    }`}
-                  />
-                ))}
-              </div>
-
-              {/* Title & Tagline with smooth transition */}
-              <div className="min-h-[82px]">
-                <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#241410] leading-snug transition-opacity duration-300">
+              {/* Title & Tagline */}
+              <div className="min-h-[76px]">
+                <h3 className="font-serif text-xl font-bold text-[#1C1311] leading-snug group-hover:text-[#581C2E] transition-colors">
                   {currentSlide.title}
-                </h2>
-                <p className="text-xs sm:text-sm text-[#4A3830] mt-1.5 leading-relaxed font-normal line-clamp-2">
+                </h3>
+                <p className="text-xs text-[#5C4A42] mt-1.5 leading-relaxed line-clamp-2">
                   {currentSlide.tagline}
                 </p>
               </div>
 
-              {/* Evidence Bar */}
-              <div className="mt-4 pt-3 border-t border-[#E2D7C8] flex items-center justify-between text-xs">
-                <div className="flex items-center gap-1.5 text-[#194D33] font-bold">
-                  <ShieldCheck className="w-4 h-4 text-[#194D33]" />
-                  <span>{currentSlide.attendeeEvidence}</span>
+              {/* Evidence & Score Bar */}
+              <div className="mt-4 pt-3 border-t border-[#E5DDD1] flex items-center justify-between text-xs">
+                <div className="flex items-center gap-1.5 text-[#1F5C3E] font-medium">
+                  <ShieldCheck className="w-4 h-4 text-[#1F5C3E] shrink-0" />
+                  <span className="text-[11px]">{currentSlide.attendeeEvidence}</span>
                 </div>
                 <RelevanceScoreRing
                   score={currentSlide.score}
-                  size="md"
+                  size="sm"
                   onClick={() => navigateTo('event-details', currentSlide.id)}
                 />
               </div>
 
-              {/* Action */}
-              <div className="mt-5">
+              {/* Primary Action Button */}
+              <div className="mt-4">
                 <button
                   onClick={() => navigateTo('event-details', currentSlide.id)}
-                  className="w-full py-2.5 rounded-lg bg-[#F8F4EC] hover:bg-[#EFE5D5] border border-[#D5C7B5] text-xs font-bold uppercase tracking-wider text-[#241410] transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer group-hover:border-[#5B2435]"
+                  className="w-full py-2.5 rounded-md bg-[#FAF7F2] hover:bg-[#F2ECE1] border border-[#D5C9B8] text-xs font-semibold uppercase tracking-wider text-[#1C1311] transition-colors flex items-center justify-center gap-2 cursor-pointer group-hover:border-[#581C2E]"
                 >
-                  <span>Inspect Session & Claims</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#5B2435]" />
+                  <span>Inspect Session Details</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#581C2E]" />
                 </button>
               </div>
             </div>

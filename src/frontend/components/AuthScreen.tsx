@@ -14,10 +14,9 @@ import {
   AlertCircle,
   Compass,
   Check,
-  ChevronRight,
   Zap,
-  KeyRound,
-  UserCheck
+  Clock,
+  Award
 } from 'lucide-react';
 import { useApp } from '../context/AppContext.js';
 import { api } from '../services/api.js';
@@ -59,7 +58,7 @@ const QUICK_PERSONAS: QuickPersona[] = [
     password: 'Demo2026!',
     campus: 'IIIT Delhi / South Campus',
     badge: 'Verified Student · Tier 1',
-    badgeColor: 'text-[#194D33] bg-[#194D33]/10 border-[#194D33]/20',
+    badgeColor: 'text-[#194D33] bg-[#194D33]/10 border-[#194D33]/25',
     avatarBg: 'bg-[#194D33]',
     avatarText: 'AC',
     quote: 'Targeting 2-hr free gaps for tech masterclasses & AI hackathons',
@@ -75,7 +74,7 @@ const QUICK_PERSONAS: QuickPersona[] = [
     password: 'Demo2026!',
     campus: 'DTU Rohini / North Campus',
     badge: 'Audit Pending · Fast Review',
-    badgeColor: 'text-[#8A5A16] bg-[#8A5A16]/10 border-[#8A5A16]/20',
+    badgeColor: 'text-[#8A5A16] bg-[#8A5A16]/10 border-[#8A5A16]/25',
     avatarBg: 'bg-[#8A5A16]',
     avatarText: 'RS',
     quote: 'Exploring robotics workshops & seeking verifiable attendance credit',
@@ -91,7 +90,7 @@ const QUICK_PERSONAS: QuickPersona[] = [
     password: 'Demo2026!',
     campus: 'South Delhi Collegiate Hub',
     badge: 'Certified Organiser Desk',
-    badgeColor: 'text-[#5B2435] bg-[#5B2435]/10 border-[#5B2435]/20',
+    badgeColor: 'text-[#5B2435] bg-[#5B2435]/10 border-[#5B2435]/25',
     avatarBg: 'bg-[#5B2435]',
     avatarText: 'SL',
     quote: 'Auditing 140+ attendee verify claims with 96% speaker confidence',
@@ -107,7 +106,7 @@ const QUICK_PERSONAS: QuickPersona[] = [
     password: 'Demo2026!',
     campus: 'University Council NCR',
     badge: 'Faculty Oversight Authority',
-    badgeColor: 'text-[#241410] bg-[#241410]/10 border-[#241410]/20',
+    badgeColor: 'text-[#241410] bg-[#241410]/10 border-[#241410]/25',
     avatarBg: 'bg-[#241410]',
     avatarText: 'DS',
     quote: 'Reviewing cross-campus event accreditation & organizer integrity',
@@ -179,6 +178,7 @@ export const AuthScreen: React.FC = () => {
       }
       if (password !== confirmPassword) {
         setError('Passwords do not match. Please re-enter.');
+        return;
       }
       if (selectedRole === 'organizer' && !organizationName.trim()) {
         setError('Please provide your club, society, or department name.');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Clock, AlertCircle, Info, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Clock, AlertCircle, Info, ArrowRight } from 'lucide-react';
 import { useApp } from '../context/AppContext.js';
 
 export const StudentVerificationBanner: React.FC = () => {
@@ -12,72 +12,44 @@ export const StudentVerificationBanner: React.FC = () => {
   const status = currentUser?.student_verification_status || 'unverified';
 
   if (status === 'verified') {
-    return null; // Verified students don't need a reminder banner
+    return null;
   }
 
   return (
-    <div className="w-full bg-[#FFFDF8] border-b border-[#E2D7C8] px-4 py-3 transition-all">
-      <div className="mx-auto max-w-6xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <div className="w-full bg-[#FFFFFF] border-b border-[#E5DDD1] px-4 py-3 transition-all">
+      <div className="mx-auto max-w-7xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-start sm:items-center gap-3">
-          {status === 'unverified' && (
-            <div className="w-8 h-8 rounded-lg bg-[#5B2435]/10 text-[#5B2435] flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-          )}
-          {status === 'pending' && (
-            <div className="w-8 h-8 rounded-lg bg-[#8A5A16]/10 text-[#8A5A16] flex items-center justify-center shrink-0">
-              <Clock className="w-4 h-4" />
-            </div>
-          )}
-          {status === 'info_requested' && (
-            <div className="w-8 h-8 rounded-lg bg-[#B45309]/10 text-[#B45309] flex items-center justify-center shrink-0">
-              <Info className="w-4 h-4" />
-            </div>
-          )}
-          {status === 'rejected' && (
-            <div className="w-8 h-8 rounded-lg bg-[#8E283B]/10 text-[#8E283B] flex items-center justify-center shrink-0">
-              <AlertCircle className="w-4 h-4" />
-            </div>
-          )}
+          <div className="w-8 h-8 rounded-md bg-[#581C2E]/10 text-[#581C2E] flex items-center justify-center shrink-0">
+            {status === 'unverified' && <ShieldCheck className="w-4 h-4" />}
+            {status === 'pending' && <Clock className="w-4 h-4" />}
+            {status === 'info_requested' && <Info className="w-4 h-4" />}
+            {status === 'rejected' && <AlertCircle className="w-4 h-4" />}
+          </div>
 
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-serif font-bold text-sm text-[#241410]">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-serif font-bold text-sm text-[#1C1311]">
                 {status === 'unverified' && 'Student Identity Verification Required'}
                 {status === 'pending' && 'Student Verification Under Review'}
-                {status === 'info_requested' && 'Action Required: Additional Verification Info Requested'}
-                {status === 'rejected' && 'Student Verification Application Rejected'}
+                {status === 'info_requested' && 'Additional Student Information Requested'}
+                {status === 'rejected' && 'Verification Application Requires Updates'}
               </span>
-              <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                status === 'unverified'
-                  ? 'bg-amber-100 text-amber-900'
-                  : status === 'pending'
-                  ? 'bg-amber-50 text-amber-800'
-                  : status === 'info_requested'
-                  ? 'bg-orange-100 text-orange-900'
-                  : 'bg-red-100 text-red-900'
-              }`}>
-                {status === 'unverified' ? 'Not Verified' : status === 'pending' ? 'Pending Review' : status === 'info_requested' ? 'Action Needed' : 'Needs Resubmission'}
+              <span className="text-[10px] font-mono tracking-wider uppercase text-[#735E55] font-semibold">
+                [{status === 'unverified' ? 'Not Verified' : status === 'pending' ? 'Pending' : status === 'info_requested' ? 'Action Needed' : 'Resubmit'}]
               </span>
             </div>
-            <p className="text-xs text-[#5A453D] mt-0.5">
-              {status === 'unverified' && 'Verify your institutional credentials to earn accredited attendance, claim verified skills, and publish peer reviews.'}
-              {status === 'pending' && 'Your collegiate credentials are being audited by authorized campus organizers. Verified badges will appear automatically.'}
-              {status === 'info_requested' && (currentUser?.verification_info_request ? `Reviewer message: "${currentUser.verification_info_request}"` : 'The reviewer needs clarification before certifying your collegiate standing.')}
-              {status === 'rejected' && (currentUser?.verification_rejection_reason ? `Reviewer feedback: "${currentUser.verification_rejection_reason}"` : 'Please correct your collegiate credentials and resubmit for verification.')}
+            <p className="text-xs text-[#5C4A42] mt-0.5">
+              {status === 'unverified' && 'Verify your institutional credentials to earn accredited session hours and build your student portfolio.'}
+              {status === 'pending' && 'Your university credentials are currently being reviewed by campus organizers. Verified badges appear upon approval.'}
+              {status === 'info_requested' && (currentUser?.verification_info_request ? `Reviewer: "${currentUser.verification_info_request}"` : 'The reviewer requires clarification before approving your collegiate standing.')}
+              {status === 'rejected' && (currentUser?.verification_rejection_reason ? `Feedback: "${currentUser.verification_rejection_reason}"` : 'Please correct your collegiate credentials and resubmit.')}
             </p>
           </div>
         </div>
 
         <button
           onClick={() => setIsVerificationModalOpen(true)}
-          className={`shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-xs ${
-            status === 'unverified'
-              ? 'bg-[#5B2435] text-[#FFFDF8] hover:bg-[#3F1723]'
-              : status === 'info_requested' || status === 'rejected'
-              ? 'bg-[#92400E] text-[#FFFDF8] hover:bg-[#78350F]'
-              : 'bg-[#F8F4EC] text-[#241410] border border-[#D5C7B5] hover:bg-[#EFE5D5]'
-          }`}
+          className="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold uppercase tracking-wider transition-colors shadow-2xs bg-[#581C2E] text-[#FAF7F2] hover:bg-[#431422] cursor-pointer"
         >
           <span>
             {status === 'unverified' && 'Verify Student ID'}

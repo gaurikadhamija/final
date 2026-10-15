@@ -113,30 +113,30 @@ export const EventDetailsPage: React.FC<Props> = ({ eventId }) => {
         <div className="mb-6 flex items-center justify-between">
           <button
             onClick={() => navigateTo('discover')}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4A3830] hover:text-[#241410] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5C4A42] hover:text-[#1C1311] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Discovery</span>
+            <span>Back to Catalog</span>
           </button>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => toggleSave(event.id)}
-              className={`px-3.5 py-1.5 rounded-lg border text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs ${
+              className={`px-3.5 py-1.5 rounded-md border text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer ${
                 isSaved
-                  ? 'bg-[#5B2435] text-[#FFFDF8] border-[#5B2435]'
-                  : 'bg-[#FFFDF8] text-[#241410] border-[#D5C7B5] hover:bg-[#F8F4EC]'
+                  ? 'bg-[#581C2E] text-white border-[#581C2E]'
+                  : 'bg-[#FFFFFF] text-[#1C1311] border-[#D5C9B8] hover:bg-[#FAF7F2]'
               }`}
             >
-              <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-[#FFFDF8]' : 'text-[#241410]'}`} />
+              <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-white' : 'text-[#1C1311]'}`} />
               <span>{isSaved ? 'Saved' : 'Save Session'}</span>
             </button>
           </div>
         </div>
 
         {/* Hero Presentation Card */}
-        <div className="bg-[#FFFDF8] border border-[#E2D7C8] rounded-2xl overflow-hidden shadow-xs mb-10">
-          <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-[#241410]">
+        <div className="bg-[#FFFFFF] border border-[#D5C9B8] rounded-lg overflow-hidden shadow-2xs mb-10">
+          <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-[#1C1311]">
             <img
               src={event.cover_image}
               alt={event.title}
@@ -202,11 +202,11 @@ export const EventDetailsPage: React.FC<Props> = ({ eventId }) => {
           </div>
 
           {/* Registration / Attendance CTA Row */}
-          <div className="p-6 bg-[#F8F4EC] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-xs text-[#4A3830]">
+          <div className="p-6 bg-[#FAF7F2] border-t border-[#E5DDD1] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-xs text-[#5C4A42]">
               {analytics && (
                 <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-[#241410]">
+                  <span className="font-mono font-semibold text-[#1C1311]">
                     {analytics.seats_registered} / {analytics.seats_total} seats registered ({Math.round((analytics.seats_registered/analytics.seats_total)*100)}% capacity)
                   </span>
                 </div>
@@ -217,20 +217,20 @@ export const EventDetailsPage: React.FC<Props> = ({ eventId }) => {
               <button
                 type="button"
                 onClick={() => toggleSave(event.id)}
-                className={`w-full sm:w-auto px-4 py-2.5 rounded-lg border text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-2xs ${
+                className={`w-full sm:w-auto px-4 py-2.5 rounded-md border text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer ${
                   isSaved
-                    ? 'bg-[#5B2435] text-[#FFFDF8] border-[#5B2435]'
-                    : 'bg-[#FFFDF8] hover:bg-[#FAF4EB] text-[#241410] border-[#D5C7B5]'
+                    ? 'bg-[#581C2E] text-white border-[#581C2E]'
+                    : 'bg-[#FFFFFF] hover:bg-[#FAF7F2] text-[#1C1311] border-[#D5C9B8]'
                 }`}
                 title={isSaved ? 'Remove from saved sessions' : 'Save session to your agenda'}
               >
-                <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-[#FFFDF8]' : 'text-[#5B2435]'}`} />
+                <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-white' : 'text-[#581C2E]'}`} />
                 <span>{isSaved ? 'Saved' : 'Save Session'}</span>
               </button>
 
               <button
                 onClick={() => setReviewModalEvent(event)}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-[#D5C7B5] bg-[#FFFDF8] hover:bg-[#FAF4EB] text-xs font-bold text-[#241410] transition-colors shadow-2xs"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-md border border-[#D5C9B8] bg-[#FFFFFF] hover:bg-[#FAF7F2] text-xs font-semibold text-[#1C1311] transition-colors shadow-2xs cursor-pointer"
               >
                 Leave Feedback
               </button>
@@ -238,13 +238,13 @@ export const EventDetailsPage: React.FC<Props> = ({ eventId }) => {
               <button
                 onClick={handleRegister}
                 disabled={isRegistering || isRegistered}
-                className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors shadow-xs ${
+                className={`w-full sm:w-auto px-6 py-2.5 rounded-md text-xs font-semibold uppercase tracking-wider transition-colors shadow-2xs cursor-pointer ${
                   isRegistered
-                    ? 'bg-[#194D33] text-[#FFFDF8] cursor-default'
-                    : 'bg-[#5B2435] text-[#FFFDF8] hover:bg-[#3F1723]'
+                    ? 'bg-[#1F5C3E] text-white cursor-default'
+                    : 'bg-[#581C2E] text-white hover:bg-[#431422]'
                 }`}
               >
-                {isRegistered ? '✓ You Are Registered' : isRegistering ? 'Registering...' : 'Register for Session'}
+                {isRegistered ? '✓ Registered' : isRegistering ? 'Registering...' : 'Register for Session'}
               </button>
             </div>
           </div>

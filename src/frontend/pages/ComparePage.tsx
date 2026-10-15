@@ -298,7 +298,7 @@ export const ComparePage: React.FC = () => {
 
               {/* Actions row */}
               <tr>
-                <td className="p-4 sm:p-5 font-bold text-[#241410]">Save / Select</td>
+                <td className="p-4 sm:p-5 font-semibold text-[#1C1311]">Session Actions</td>
                 {events.map((ev: any) => {
                   const isSaved = savedEventIds.has(ev.id);
                   return (
@@ -307,20 +307,20 @@ export const ComparePage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => toggleSave(ev.id)}
-                          className={`w-full inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold border transition-colors ${
+                          className={`w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold border transition-colors cursor-pointer ${
                             isSaved
-                              ? 'bg-[#5B2435] text-[#FFFDF8] border-[#5B2435]'
-                              : 'bg-[#FFFDF8] hover:bg-[#F8F4EC] text-[#241410] border-[#D5C7B5]'
+                              ? 'bg-[#581C2E] text-white border-[#581C2E]'
+                              : 'bg-[#FFFFFF] hover:bg-[#FAF7F2] text-[#1C1311] border-[#D5C9B8]'
                           }`}
                           title={isSaved ? 'Remove from saved sessions' : 'Save session to your agenda'}
                         >
-                          <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-[#FFFDF8]' : 'text-[#5B2435]'}`} />
+                          <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-white' : 'text-[#581C2E]'}`} />
                           <span>{isSaved ? 'Saved' : 'Save Session'}</span>
                         </button>
 
                         <button
                           onClick={() => navigateTo('event-details', ev.id)}
-                          className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#5B2435] text-[#FFFDF8] text-xs font-bold uppercase tracking-wider hover:bg-[#3F1723] transition-colors shadow-xs"
+                          className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-md bg-[#581C2E] text-[#FAF7F2] text-xs font-semibold uppercase tracking-wider hover:bg-[#431422] transition-colors shadow-2xs cursor-pointer"
                         >
                           <span>Select Event</span>
                           <ArrowRight className="w-3.5 h-3.5" />

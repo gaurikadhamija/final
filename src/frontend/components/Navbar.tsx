@@ -59,7 +59,7 @@ export const Navbar: React.FC = () => {
     : 'W';
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#FFFDF8]/96 backdrop-blur-md border-b border-[#E2D7C8] shadow-[0_2px_12px_rgba(36,20,16,0.04)] transition-colors">
+    <header className="sticky top-0 z-40 w-full bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E5DDD1] transition-colors">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-6">
           
@@ -70,53 +70,51 @@ export const Navbar: React.FC = () => {
               className="flex items-center gap-3 text-left group focus-visible:outline-none"
               aria-label="WorthWhile Home"
             >
-              <div className="flex items-center gap-3">
-                {!logoLoadError ? (
-                  <img
-                    src="/worthwhile-icon.svg"
-                    alt="WorthWhile Emblem"
-                    onError={() => setLogoLoadError(true)}
-                    className="h-10 w-10 shrink-0 object-contain transition-transform group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="h-10 w-10 shrink-0 rounded-lg bg-gradient-to-br from-[#5B2435] to-[#30231F] flex items-center justify-center text-[#FFFDF8] font-serif font-bold text-xl shadow-xs">
-                    W
-                  </div>
-                )}
-                <div className="flex flex-col">
-                  <span className="font-serif text-2xl sm:text-[26px] font-bold tracking-tight text-[#241410] leading-none">
-                    WorthWhile
-                  </span>
-                  <span className="text-[9.5px] font-sans font-bold uppercase tracking-widest text-[#5B2435] mt-1 hidden sm:block">
-                    The right events · For your goals
-                  </span>
+              {!logoLoadError ? (
+                <img
+                  src="/worthwhile-icon.svg"
+                  alt="WorthWhile"
+                  onError={() => setLogoLoadError(true)}
+                  className="h-9 w-9 shrink-0 object-contain transition-transform group-hover:scale-102"
+                />
+              ) : (
+                <div className="h-9 w-9 shrink-0 rounded-md bg-[#581C2E] flex items-center justify-center text-[#FAF7F2] font-serif font-bold text-lg shadow-2xs">
+                  W
                 </div>
+              )}
+              <div className="flex flex-col">
+                <span className="font-serif text-2xl font-bold tracking-tight text-[#1C1311] leading-none group-hover:text-[#581C2E] transition-colors">
+                  WorthWhile
+                </span>
+                <span className="text-[9px] font-mono tracking-wider uppercase text-[#735E55] mt-1 font-semibold hidden sm:block">
+                  Campus Event Intelligence
+                </span>
               </div>
             </button>
           </div>
 
           {/* ZONE 2: NAVIGATION LINKS */}
-          <nav className="hidden lg:flex items-center gap-6 text-sm">
+          <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold tracking-wide">
             {navLinks.map(link => {
               const isActive = activePage === link.page;
               return (
                 <button
                   key={link.page}
                   onClick={() => navigateTo(link.page)}
-                  className={`relative py-1 text-xs uppercase tracking-wider font-bold whitespace-nowrap shrink-0 transition-colors ${
+                  className={`relative py-1.5 transition-colors uppercase tracking-wider text-[11px] font-bold ${
                     isActive
-                      ? 'text-[#5B2435]'
-                      : 'text-[#4A3830] hover:text-[#241410]'
+                      ? 'text-[#581C2E]'
+                      : 'text-[#5C4A42] hover:text-[#1C1311]'
                   }`}
                 >
                   <span>{link.label}</span>
                   {link.page === 'compare' && compareEventIds.length > 0 && (
-                    <span className="ml-1.5 px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-[#5B2435] text-[#FFFDF8] font-bold">
+                    <span className="ml-1.5 px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#581C2E] text-white font-bold">
                       {compareEventIds.length}
                     </span>
                   )}
                   {isActive && (
-                    <span className="absolute -bottom-2.5 left-0 right-0 h-0.5 bg-[#5B2435]" />
+                    <span className="absolute -bottom-[21px] left-0 right-0 h-[2px] bg-[#581C2E]" />
                   )}
                 </button>
               );
@@ -129,27 +127,27 @@ export const Navbar: React.FC = () => {
             {/* Quick Goals Trigger Button */}
             <button
               onClick={() => setIsGoalsModalOpen(true)}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D5C7B5] bg-[#F8F4EC] hover:bg-[#EFE5D5] text-xs font-bold text-[#241410] transition-colors whitespace-nowrap shadow-xs"
-              title="Calibrate semester goals"
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#D5C9B8] bg-[#FFFFFF] hover:bg-[#F5EFE6] text-xs font-semibold text-[#1C1311] transition-colors whitespace-nowrap shadow-2xs"
+              title="Calibrate semester priorities"
             >
-              <Sliders className="w-3.5 h-3.5 text-[#5B2435]" />
-              <span>My Goals</span>
+              <Sliders className="w-3.5 h-3.5 text-[#581C2E]" />
+              <span>Priorities</span>
             </button>
 
-            {/* Role Switcher Pill */}
+            {/* Role Switcher */}
             <div className="relative">
               <button
                 onClick={() => setRoleMenuOpen(!roleMenuOpen)}
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[#D5C7B5] bg-[#FFFDF8] hover:bg-[#F8F4EC] text-xs font-semibold text-[#241410] transition-colors capitalize shadow-xs"
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[#D5C9B8] bg-[#FFFFFF] hover:bg-[#F5EFE6] text-xs font-medium text-[#1C1311] transition-colors shadow-2xs"
                 aria-expanded={roleMenuOpen}
               >
-                <span className="w-2 h-2 rounded-full bg-[#5B2435]" />
-                <span className="text-[11px] font-bold">{currentUserRole} View</span>
-                <ChevronDown className="w-3 h-3 text-[#665249]" />
+                <span className="text-[11px] font-semibold capitalize text-[#581C2E]">{currentUserRole}</span>
+                <span className="text-[11px] text-[#735E55]">View</span>
+                <ChevronDown className="w-3 h-3 text-[#735E55]" />
               </button>
 
               {roleMenuOpen && (
-                <div className="absolute right-0 mt-1.5 w-44 rounded-xl bg-[#FFFDF8] border border-[#D5C7B5] shadow-xl py-1 z-50 animate-fadeIn">
+                <div className="absolute right-0 mt-1.5 w-44 rounded-lg bg-[#FFFFFF] border border-[#D5C9B8] shadow-lg py-1 z-50">
                   {(['student', 'organizer'] as UserRole[]).map(role => (
                     <button
                       key={role}
@@ -161,55 +159,55 @@ export const Navbar: React.FC = () => {
                       }}
                       className={`w-full px-3 py-2 text-left text-xs capitalize flex items-center justify-between ${
                         currentUserRole === role
-                          ? 'bg-[#F8F4EC] font-bold text-[#5B2435]'
-                          : 'text-[#241410] hover:bg-[#FAF4EB]'
+                          ? 'bg-[#F5EFE6] font-bold text-[#581C2E]'
+                          : 'text-[#1C1311] hover:bg-[#FAF7F2]'
                       }`}
                     >
                       <span className="flex items-center gap-2">
-                        {role === 'student' ? <GraduationCap className="w-3.5 h-3.5" /> : <Building2 className="w-3.5 h-3.5" />}
+                        {role === 'student' ? <GraduationCap className="w-3.5 h-3.5 text-[#581C2E]" /> : <Building2 className="w-3.5 h-3.5 text-[#581C2E]" />}
                         <span>{role} Perspective</span>
                       </span>
-                      {currentUserRole === role && <CheckCircle2 className="w-3.5 h-3.5 text-[#5B2435]" />}
+                      {currentUserRole === role && <CheckCircle2 className="w-3.5 h-3.5 text-[#581C2E]" />}
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Student Verification Pill */}
+            {/* Student Verification Button */}
             {isAuthenticated && currentUser?.role === 'student' && (
               <button
                 onClick={() => setIsVerificationModalOpen(true)}
-                className={`hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors shadow-xs ${
+                className={`hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors shadow-2xs ${
                   currentUser.student_verification_status === 'verified'
-                    ? 'border-[#194D33]/30 bg-[#194D33]/10 text-[#194D33] hover:bg-[#194D33]/15'
+                    ? 'border-[#1F5C3E]/30 bg-[#1F5C3E]/8 text-[#1F5C3E] hover:bg-[#1F5C3E]/15'
                     : currentUser.student_verification_status === 'pending'
-                    ? 'border-[#8A5A16]/30 bg-[#8A5A16]/10 text-[#8A5A16] hover:bg-[#8A5A16]/15'
+                    ? 'border-[#8C6834]/30 bg-[#8C6834]/8 text-[#8C6834] hover:bg-[#8C6834]/15'
                     : currentUser.student_verification_status === 'info_requested'
-                    ? 'border-[#B45309]/30 bg-[#B45309]/10 text-[#B45309] hover:bg-[#B45309]/15'
-                    : 'border-[#5B2435]/30 bg-[#5B2435]/10 text-[#5B2435] hover:bg-[#5B2435]/15'
+                    ? 'border-[#B45309]/30 bg-[#B45309]/8 text-[#B45309] hover:bg-[#B45309]/15'
+                    : 'border-[#581C2E]/30 bg-[#581C2E]/8 text-[#581C2E] hover:bg-[#581C2E]/15'
                 }`}
                 title="Student Verification Status"
               >
                 {currentUser.student_verification_status === 'verified' ? (
                   <>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#194D33]" />
-                    <span className="text-[11px] font-bold">Verified Student</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#1F5C3E]" />
+                    <span className="text-[11px]">Verified Student</span>
                   </>
                 ) : currentUser.student_verification_status === 'pending' ? (
                   <>
-                    <Clock className="w-3.5 h-3.5 text-[#8A5A16]" />
-                    <span className="text-[11px] font-bold">Verification Pending</span>
+                    <Clock className="w-3.5 h-3.5 text-[#8C6834]" />
+                    <span className="text-[11px]">Pending Review</span>
                   </>
                 ) : currentUser.student_verification_status === 'info_requested' ? (
                   <>
                     <Info className="w-3.5 h-3.5 text-[#B45309]" />
-                    <span className="text-[11px] font-bold">Action Required</span>
+                    <span className="text-[11px]">Action Required</span>
                   </>
                 ) : (
                   <>
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#5B2435]" />
-                    <span className="text-[11px] font-bold">Verify ID</span>
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#581C2E]" />
+                    <span className="text-[11px]">Verify ID</span>
                   </>
                 )}
               </button>
@@ -219,24 +217,24 @@ export const Navbar: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="relative p-2 rounded-lg text-[#4A3830] hover:text-[#241410] hover:bg-[#F8F4EC] transition-colors"
+                className="relative p-2 rounded-md text-[#5C4A42] hover:text-[#1C1311] hover:bg-[#F2ECE1] transition-colors"
                 aria-label="Notifications"
               >
                 <Bell className="w-4 h-4" />
                 {unreadNotificationCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#5B2435]" />
+                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#581C2E]" />
                 )}
               </button>
 
               {notificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-[#FFFDF8] border border-[#D5C7B5] shadow-2xl p-4 z-50 animate-fadeIn">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#E2D7C8]">
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-lg bg-[#FFFFFF] border border-[#D5C9B8] shadow-xl p-4 z-50 text-xs">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#E5DDD1]">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#241410]">
-                        Campus Intelligence Alerts
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#1C1311]">
+                        Campus Alerts
                       </h4>
                       {unreadNotificationCount > 0 && (
-                        <span className="text-[10px] bg-[#5B2435] text-white px-1.5 py-0.2 rounded-full font-bold">
+                        <span className="text-[10px] bg-[#581C2E] text-white px-1.5 py-0.5 rounded font-mono font-bold">
                           {unreadNotificationCount}
                         </span>
                       )}
@@ -244,7 +242,7 @@ export const Navbar: React.FC = () => {
                     {unreadNotificationCount > 0 && (
                       <button
                         onClick={markAllNotificationsAsRead}
-                        className="text-[11px] text-[#5B2435] hover:underline font-bold"
+                        className="text-[11px] text-[#581C2E] hover:underline font-semibold"
                       >
                         Mark all read
                       </button>
@@ -253,7 +251,7 @@ export const Navbar: React.FC = () => {
 
                   <div className="mt-2 max-h-72 overflow-y-auto space-y-2">
                     {notifications.length === 0 ? (
-                      <p className="text-xs text-[#665249] py-4 text-center">
+                      <p className="text-xs text-[#735E55] py-4 text-center">
                         No notifications right now.
                       </p>
                     ) : (
@@ -267,21 +265,18 @@ export const Navbar: React.FC = () => {
                               setNotificationsOpen(false);
                             }
                           }}
-                          className={`p-2.5 rounded-xl border text-xs cursor-pointer transition-colors ${
+                          className={`p-2.5 rounded-md border text-xs cursor-pointer transition-colors ${
                             n.read
-                              ? 'border-transparent bg-[#F8F4EC]/60 text-[#4A3830]'
-                              : 'border-[#5B2435]/30 bg-[#F8F4EC] text-[#241410]'
+                              ? 'border-transparent bg-[#FAF7F2] text-[#5C4A42]'
+                              : 'border-[#581C2E]/20 bg-[#FBF9F6] text-[#1C1311]'
                           }`}
                         >
                           <div className="flex items-start justify-between gap-1">
-                            <span className="font-bold text-xs text-[#241410]">
+                            <span className="font-semibold text-xs text-[#1C1311]">
                               {n.title}
                             </span>
-                            {!n.read && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#5B2435] shrink-0 mt-1" />
-                            )}
                           </div>
-                          <p className="text-[11px] text-[#4A3830] mt-0.5 line-clamp-2 leading-relaxed">
+                          <p className="text-[11px] text-[#5C4A42] mt-0.5 line-clamp-2 leading-relaxed">
                             {n.message}
                           </p>
                         </div>
@@ -297,29 +292,29 @@ export const Navbar: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 p-1 rounded-xl hover:bg-[#F8F4EC] transition-colors"
+                  className="flex items-center gap-2 p-1 rounded-md hover:bg-[#F2ECE1] transition-colors"
                   aria-label="User Account"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#5B2435] to-[#30231F] text-[#FFFDF8] flex items-center justify-center font-serif text-xs font-bold shadow-xs">
+                  <div className="w-8 h-8 rounded-md bg-[#581C2E] text-[#FAF7F2] flex items-center justify-center font-serif text-xs font-bold shadow-2xs">
                     {initials}
                   </div>
                   <div className="hidden sm:flex flex-col text-left">
-                    <span className="text-xs font-bold text-[#241410] leading-tight truncate max-w-[110px]">
+                    <span className="text-xs font-semibold text-[#1C1311] leading-tight truncate max-w-[110px]">
                       {currentUser.name}
                     </span>
-                    <span className="text-[9.5px] font-mono font-semibold text-[#5B2435] uppercase tracking-wider capitalize">
+                    <span className="text-[9.5px] font-mono text-[#735E55] uppercase tracking-wider capitalize">
                       {currentUser.role}
                     </span>
                   </div>
-                  <ChevronDown className="w-3 h-3 text-[#7A6860] hidden sm:block" />
+                  <ChevronDown className="w-3 h-3 text-[#735E55] hidden sm:block" />
                 </button>
 
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-[#FFFDF8] border border-[#D5C7B5] shadow-2xl p-2 z-50 animate-fadeIn text-xs">
-                    <div className="px-3 py-2.5 border-b border-[#E2D7C8] mb-1">
-                      <p className="font-bold text-[#241410]">{currentUser.name}</p>
-                      <p className="text-[10px] text-[#7A6860] font-mono truncate">{currentUser.email}</p>
-                      <span className="mt-1 inline-block text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#194D33] bg-[#194D33]/10 px-2 py-0.2 rounded">
+                  <div className="absolute right-0 mt-2 w-56 rounded-lg bg-[#FFFFFF] border border-[#D5C9B8] shadow-xl p-2 z-50 text-xs">
+                    <div className="px-3 py-2.5 border-b border-[#E5DDD1] mb-1">
+                      <p className="font-semibold text-[#1C1311]">{currentUser.name}</p>
+                      <p className="text-[10px] text-[#735E55] font-mono truncate">{currentUser.email}</p>
+                      <span className="mt-1.5 inline-block text-[9.5px] font-mono font-semibold uppercase tracking-wider text-[#1F5C3E] bg-[#1F5C3E]/8 px-2 py-0.5 rounded">
                         Active {currentUser.role}
                       </span>
                     </div>
@@ -329,10 +324,10 @@ export const Navbar: React.FC = () => {
                         setUserDropdownOpen(false);
                         navigateTo('myevents');
                       }}
-                      className="w-full px-3 py-2 text-left rounded-lg hover:bg-[#F8F4EC] flex items-center gap-2 text-[#241410]"
+                      className="w-full px-3 py-2 text-left rounded-md hover:bg-[#FAF7F2] flex items-center gap-2 text-[#1C1311]"
                     >
-                      <Award className="w-3.5 h-3.5 text-[#5B2435]" />
-                      <span>My Portfolio & Transcript</span>
+                      <Award className="w-3.5 h-3.5 text-[#581C2E]" />
+                      <span>Portfolio & Transcript</span>
                     </button>
 
                     <button
@@ -340,9 +335,9 @@ export const Navbar: React.FC = () => {
                         setUserDropdownOpen(false);
                         setIsEditProfileOpen(true);
                       }}
-                      className="w-full px-3 py-2 text-left rounded-lg hover:bg-[#F8F4EC] flex items-center gap-2 text-[#241410]"
+                      className="w-full px-3 py-2 text-left rounded-md hover:bg-[#FAF7F2] flex items-center gap-2 text-[#1C1311]"
                     >
-                      <Edit3 className="w-3.5 h-3.5 text-[#5B2435]" />
+                      <Edit3 className="w-3.5 h-3.5 text-[#581C2E]" />
                       <span>Edit Student Profile</span>
                     </button>
 
@@ -352,21 +347,13 @@ export const Navbar: React.FC = () => {
                           setUserDropdownOpen(false);
                           setIsVerificationModalOpen(true);
                         }}
-                        className="w-full px-3 py-2 text-left rounded-lg hover:bg-[#F8F4EC] flex items-center justify-between text-[#241410]"
+                        className="w-full px-3 py-2 text-left rounded-md hover:bg-[#FAF7F2] flex items-center justify-between text-[#1C1311]"
                       >
                         <span className="flex items-center gap-2">
-                          <ShieldCheck className="w-3.5 h-3.5 text-[#5B2435]" />
+                          <ShieldCheck className="w-3.5 h-3.5 text-[#581C2E]" />
                           <span>Student ID Verification</span>
                         </span>
-                        <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
-                          currentUser.student_verification_status === 'verified'
-                            ? 'bg-[#194D33]/10 text-[#194D33]'
-                            : currentUser.student_verification_status === 'pending'
-                            ? 'bg-amber-100 text-amber-800'
-                            : currentUser.student_verification_status === 'info_requested'
-                            ? 'bg-orange-100 text-orange-900'
-                            : 'bg-[#5B2435]/10 text-[#5B2435]'
-                        }`}>
+                        <span className="text-[9px] font-mono uppercase tracking-wider text-[#735E55]">
                           {currentUser.student_verification_status || 'Unverified'}
                         </span>
                       </button>
@@ -378,20 +365,20 @@ export const Navbar: React.FC = () => {
                           setUserDropdownOpen(false);
                           navigateTo('organizer');
                         }}
-                        className="w-full px-3 py-2 text-left rounded-lg hover:bg-[#F8F4EC] flex items-center gap-2 text-[#241410] font-bold text-[#5B2435]"
+                        className="w-full px-3 py-2 text-left rounded-md hover:bg-[#FAF7F2] flex items-center gap-2 text-[#581C2E] font-semibold"
                       >
-                        <Building2 className="w-3.5 h-3.5 text-[#5B2435]" />
-                        <span>Organizer Desk & Check-in</span>
+                        <Building2 className="w-3.5 h-3.5 text-[#581C2E]" />
+                        <span>Organizer Desk</span>
                       </button>
                     )}
 
-                    <div className="pt-1 mt-1 border-t border-[#E2D7C8]">
+                    <div className="pt-1 mt-1 border-t border-[#E5DDD1]">
                       <button
                         onClick={() => {
                           setUserDropdownOpen(false);
                           logout();
                         }}
-                        className="w-full px-3 py-2 text-left rounded-lg hover:bg-[#5B2435]/10 flex items-center gap-2 text-[#5B2435] font-bold"
+                        className="w-full px-3 py-2 text-left rounded-md hover:bg-[#581C2E]/8 flex items-center gap-2 text-[#581C2E] font-semibold"
                       >
                         <LogOut className="w-3.5 h-3.5" />
                         <span>Sign Out</span>
@@ -403,7 +390,7 @@ export const Navbar: React.FC = () => {
             ) : (
               <button
                 onClick={() => setIsGuestPreview(false)}
-                className="px-3.5 py-1.5 rounded-xl bg-[#5B2435] text-[#FFFDF8] hover:bg-[#3F1723] text-xs font-bold uppercase tracking-wider transition-colors shadow-xs"
+                className="px-4 py-1.5 rounded-md bg-[#581C2E] text-[#FAF7F2] hover:bg-[#431422] text-xs font-semibold uppercase tracking-wider transition-colors shadow-2xs"
               >
                 Sign In
               </button>
@@ -412,7 +399,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile Menu Hamburger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-[#241410] hover:bg-[#F8F4EC]"
+              className="lg:hidden p-2 rounded-md text-[#1C1311] hover:bg-[#F2ECE1]"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -423,7 +410,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-[#E2D7C8] bg-[#FFFDF8] px-4 py-4 space-y-1.5 animate-fadeIn shadow-lg">
+        <div className="lg:hidden border-t border-[#E5DDD1] bg-[#FAF7F2] px-4 py-4 space-y-1.5 shadow-lg">
           {navLinks.map(link => (
             <button
               key={link.page}
@@ -431,24 +418,24 @@ export const Navbar: React.FC = () => {
                 navigateTo(link.page);
                 setMobileMenuOpen(false);
               }}
-              className={`block w-full text-left px-3 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors ${
+              className={`block w-full text-left px-3 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-colors ${
                 activePage === link.page
-                  ? 'bg-[#5B2435] text-[#FFFDF8]'
-                  : 'text-[#241410] hover:bg-[#F8F4EC]'
+                  ? 'bg-[#581C2E] text-[#FAF7F2]'
+                  : 'text-[#1C1311] hover:bg-[#F2ECE1]'
               }`}
             >
               {link.label}
             </button>
           ))}
-          <div className="pt-3 border-t border-[#E2D7C8] flex flex-col gap-2">
+          <div className="pt-3 border-t border-[#E5DDD1] flex flex-col gap-2">
             <button
               onClick={() => {
                 setIsGoalsModalOpen(true);
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2 text-center text-xs font-bold rounded-lg bg-[#5B2435] text-[#FFFDF8]"
+              className="w-full py-2 text-center text-xs font-bold rounded-md bg-[#581C2E] text-[#FAF7F2]"
             >
-              Semester Goals
+              Semester Priorities
             </button>
             {isAuthenticated ? (
               <button
@@ -456,7 +443,7 @@ export const Navbar: React.FC = () => {
                   logout();
                   setMobileMenuOpen(false);
                 }}
-                className="w-full py-2 text-center text-xs font-bold rounded-lg border border-[#D5C7B5] text-[#5B2435]"
+                className="w-full py-2 text-center text-xs font-semibold rounded-md border border-[#D5C9B8] text-[#581C2E]"
               >
                 Sign Out ({currentUser?.name})
               </button>
@@ -466,7 +453,7 @@ export const Navbar: React.FC = () => {
                   setIsGuestPreview(false);
                   setMobileMenuOpen(false);
                 }}
-                className="w-full py-2 text-center text-xs font-bold rounded-lg bg-[#5B2435] text-[#FFFDF8]"
+                className="w-full py-2 text-center text-xs font-bold rounded-md bg-[#581C2E] text-[#FAF7F2]"
               >
                 Sign In / Register
               </button>
